@@ -3,6 +3,11 @@ Spelako 是一个使用命令操作的交互式机器人, 提供 Hypixel 统计�
 
 本仓库 SpelakoOne 为 Spelako 前端, 适用于实现了 OneBot 标准的机器人框架. 欲了解更多信息, 请阅读[文档](https://spelako.github.io/).
 
+## 修改
+
+本仓库修改自[Spelako/SpelakoOne](https://github.com/Spelako/SpelakoOne), 是为将SpelakoOne部署在[Lagrange.Core](https://github.com/LagrangeDev/Lagrange.Core)修改的版本. 
+
+
 ## 许可证
 ```
 Copyright (C) 2020-2022 Spelako Project

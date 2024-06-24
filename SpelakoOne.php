@@ -2,7 +2,7 @@
 /*
  * Copyright (C) 2020-2022 Spelako Project
  * 
- * This file is part of SpelakoOne.
+ * This file is part of SpelakoMAHA.
  * Permission is granted to use, modify and/or distribute this program 
  * under the terms of the GNU Affero General Public License version 3.
  * You should have received a copy of the license along with this program.
@@ -44,7 +44,7 @@ $core = new SpelakoCore(realpath($cliargs['config']));
 
 echo SpelakoUtils::buildString([
 	'Copyright (C) 2020-2022 Spelako Project',
-	'This program is licensed under the GNU Affero General Public License version 3 (AGPLv3).'
+	'This program licensed under the GNU Affero General Public License version 3 (AGPLv3).'
 ]).PHP_EOL;
 
 _log('成功在本地启动端口为 '.$localPort.' 的事件监听 HTTP 服务器. 开始监听请求...');
@@ -60,19 +60,20 @@ while(true) {
 		fclose($conn);
 
 		$content = json_decode(substr($datagram, $header_length));
-		if($content->post_type == 'message' && $content->message_type == 'group' && $content->message[0] == '/') {
+		if($content->post_type == 'message' && $content->message_type == 'group' && $content->raw_message[0] == '/') {
 			_log(SpelakoUtils::buildString(
 				'群: %1$s | 用户: %2$s (%3$s) | 消息: %4$s',
 				[
 					$content->group_id,
 					$content->sender->nickname,
 					$content->user_id,
-					$content->message
+					//$content->message
+					$content->raw_message
 				]
 			));
-			$requestResult = $core->execute($content->message, $content->user_id);
+			$requestResult = $core->execute($content->raw_message, $content->user_id);
 			if(!$requestResult) {
-				$cmd = explode(' ', $content->message)[0];
+				$cmd = explode(' ', $content->raw_message)[0];
 				foreach($core->getCommands() as $pointer) foreach($pointer->getName() as $pointerCmd) {
 					similar_text($cmd, $pointerCmd, $percent);
 					if($percent > 70) {
